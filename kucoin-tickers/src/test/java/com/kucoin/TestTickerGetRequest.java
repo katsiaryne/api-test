@@ -2,7 +2,10 @@ package com.kucoin;
 
 import com.kucoin.model.Ticker;
 import com.kucoin.model.TickerShort;
+import com.kucoin.model.TickerShortJson;
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -16,17 +19,34 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestTickerGetRequest {
+    public static final RequestSpecification REQUEST_SPECIFICATION = new RequestSpecBuilder()
+            .setContentType(ContentType.JSON)
+            .setBaseUri("https://api.kucoin.com/api/v1")
+            .setBasePath("/market/allTickers")
+            .build();
+
     private List<Ticker> getAllTickers() {
         return given()
-                .contentType(ContentType.JSON)
+                .spec(REQUEST_SPECIFICATION)
                 .when()
-                .get("https://api.kucoin.com/api/v1/market/allTickers")
+                .get()
                 .then()
                 .log()
                 .body()
                 .extract()
                 .jsonPath()
                 .getList("data.ticker", Ticker.class);
+    }
+
+    private List<TickerShortJson> getAllTickersShort() {
+        return given()
+                .spec(REQUEST_SPECIFICATION)
+                .when()
+                .get()
+                .then()
+                .extract()
+                .jsonPath()
+                .getList("data.ticker", TickerShortJson.class);
     }
 
     @Test
@@ -97,7 +117,8 @@ public class TestTickerGetRequest {
     public void createMap() {
         List<TickerShort> tickers = new ArrayList<>();
         getAllTickers()
-                .forEach(ticker -> tickers.add(new TickerShort(ticker.getSymbolName(), Float.parseFloat(ticker.getChangeRate()))));
+                .forEach(ticker -> tickers.add(new TickerShort(ticker.getSymbolName(), ticker.getChangeRate())));
+
         assertAll(
                 () -> assertFalse(tickers.isEmpty())
         );

@@ -7,5 +7,5 @@ import lombok.Getter;
 @Getter
 public class TickerShort {
     private String name;
-    private Float changeRate;
+    private String changeRate;
 }
