@@ -15,6 +15,7 @@ import static in.res.config.Specification.responseSpecification204Code;
 import static in.res.config.Specification.responseSpecification400Code;
 import static in.res.uril.TestConstants.ERROR_AUTH_REQUEST;
 import static in.res.uril.TestConstants.SUCCESS_AUTH_REQUEST;
+import static in.res.uril.TestConstants.SUCCESS_AUTH_RESPONSE;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -62,8 +63,7 @@ public class TestReqres {
                 "",
                 () -> assertNotNull(response.id()),
                 () -> assertNotNull(response.token()),
-                () -> assertEquals(4, response.id()),
-                () -> assertEquals("QpwL5tke4Pnpja7X4", response.token())
+                () -> assertEquals(SUCCESS_AUTH_RESPONSE, response)
         );
     }
 
