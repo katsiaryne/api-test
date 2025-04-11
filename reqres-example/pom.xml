@@ -25,6 +25,7 @@
         <maven-project-info-reports-plugin.version>3.9.0</maven-project-info-reports-plugin.version>
         <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
         <allure-maven.version>2.15.2</allure-maven.version>
+        <hamcrest.version>3.0</hamcrest.version>
     </properties>
     <dependencies>
         <dependency>
@@ -65,6 +66,12 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
             <version>${allure-junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest</artifactId>
+            <version>${hamcrest.version}</version>
             <scope>test</scope>
         </dependency>
 
