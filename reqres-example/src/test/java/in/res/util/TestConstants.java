@@ -1,4 +1,4 @@
-package in.res.uril;
+package in.res.util;
 
 import in.res.dto.request.AuthRequest;
 import in.res.dto.response.AuthResponse;

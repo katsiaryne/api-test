@@ -26,6 +26,7 @@
         <maven-site-plugin.version>4.0.0-M16</maven-site-plugin.version>
         <allure-maven.version>2.15.2</allure-maven.version>
         <hamcrest.version>3.0</hamcrest.version>
+        <javafaker.version>1.0.2</javafaker.version>
     </properties>
     <dependencies>
         <dependency>
@@ -73,6 +74,11 @@
             <artifactId>hamcrest</artifactId>
             <version>${hamcrest.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>${javafaker.version}</version>
         </dependency>
 
     </dependencies>
