@@ -1,31 +1,17 @@
 package in.res;
 
-import in.res.dto.response.AuthResponse;
-import in.res.dto.response.ResourceResponse;
 import in.res.dto.response.UserResponse;
 import io.qameta.allure.Description;
 import io.qameta.allure.Owner;
-import io.qameta.allure.Severity;
-import io.qameta.allure.Story;
-import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
 import static in.res.config.Specification.requestSpecification;
 import static in.res.config.Specification.responseSpecification;
-import static in.res.config.Specification.responseSpecificationWithContent;
-import static in.res.util.TestConstants.ERROR_AUTH_REQUEST;
-import static in.res.util.TestConstants.SUCCESS_AUTH_REQUEST;
-import static in.res.util.TestConstants.SUCCESS_AUTH_RESPONSE;
-import static io.qameta.allure.SeverityLevel.CRITICAL;
-import static io.qameta.allure.SeverityLevel.NORMAL;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestReqres {
@@ -53,87 +39,5 @@ public class TestReqres {
                     }
                 }
         );
-    }
-
-    @Test
-    @DisplayName("Проверка успешной регистрации")
-    @Description(value = "Данный тест выполняет регистрацию пользователя")
-    @Owner("Katsiaryna")
-    @Tag("Authentication")
-    @Severity(CRITICAL)
-    @Story("Authentication")
-    public void checkSignUp() {
-        AuthResponse response = given()
-                .spec(requestSpecification)
-                .body(SUCCESS_AUTH_REQUEST)
-                .when()
-                .post("/api/register")
-                .then()
-                .spec(responseSpecificationWithContent(200,"schemas/RegisterSuccess.json"))
-                .extract()
-                .as(AuthResponse.class);
-        assertAll(
-                "",
-                () -> assertNotNull(response.id()),
-                () -> assertNotNull(response.token()),
-                () -> assertEquals(SUCCESS_AUTH_RESPONSE, response)
-        );
-    }
-
-    @Test
-    @DisplayName("Проверка неуспешной регистрации")
-    @Owner("Katsiaryna")
-    @Tag("Authentication")
-    @Severity(CRITICAL)
-    @Story("Wrong Authentication")
-    public void checkUnsuccessfulSignUp() {
-        Response response = given()
-                .body(ERROR_AUTH_REQUEST)
-                .spec(requestSpecification)
-                .when()
-                .post("/register")
-                .then()
-                .spec(responseSpecification(400))
-                .extract()
-                .response();
-        String error = response.jsonPath().getString("error");
-        assertEquals("Missing email or username", error);
-    }
-
-    @Test
-    @DisplayName("Проверка порядка ресурсов по возрастанию года")
-    @Owner("Katsiaryna")
-    @Severity(NORMAL)
-    public void checkListResource() {
-        List<ResourceResponse> resources = given()
-                .spec(requestSpecification)
-                .when()
-                .get("/unknown")
-                .then()
-                .spec(responseSpecificationWithContent(200,"schemas/RegisterSuccess.json"))
-                .extract()
-                .body()
-                .jsonPath()
-                .getList("data", ResourceResponse.class);
-        List<Integer> actualYears = resources.stream().map(ResourceResponse::year).toList();
-        List<Integer> expectedYears = actualYears.stream().sorted().toList();
-        assertAll(
-                "",
-                () -> assertNotNull(actualYears),
-                () -> assertEquals(expectedYears, actualYears)
-        );
-    }
-
-    @Test
-    @DisplayName("Проверка кода ответа при удалении пользователя")
-    @Owner("Katsiaryna")
-    @Severity(NORMAL)
-    public void checkDeleteUser() {
-        given()
-                .spec(requestSpecification)
-                .when()
-                .delete("/users/2")
-                .then()
-                .spec(responseSpecification(204));
     }
 }

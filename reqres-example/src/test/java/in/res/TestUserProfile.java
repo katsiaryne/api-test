@@ -5,6 +5,7 @@ import in.res.dto.request.UserProfileRequest;
 import in.res.dto.response.UserProfileResponse;
 import in.res.util.UserProfileGenerator;
 import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,7 @@ import java.time.format.DateTimeFormatter;
 
 import static in.res.config.Specification.responseSpecification;
 import static in.res.config.Specification.responseSpecificationWithContent;
+import static io.qameta.allure.SeverityLevel.NORMAL;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -72,8 +74,9 @@ public class TestUserProfile {
     }
 
     @Test
-    @DisplayName("Удаление профиля пользователя")
+    @DisplayName("Проверка кода ответа при удалении пользователя")
     @Owner("Katsiaryna")
+    @Severity(NORMAL)
     @Tag("User profile")
     public void testDeleteUserProfile() {
         userClient

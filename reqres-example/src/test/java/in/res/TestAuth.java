@@ -4,6 +4,10 @@ import in.res.client.LoginClient;
 import in.res.client.RegisterClient;
 import in.res.dto.request.AuthRequest;
 import in.res.dto.response.AuthResponse;
+import io.qameta.allure.Description;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Severity;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -16,6 +20,7 @@ import static in.res.util.TestConstants.DEFAULT_TOKEN;
 import static in.res.util.TestConstants.SUCCESS_AUTH_REQUEST;
 import static in.res.util.TestConstants.SUCCESS_AUTH_RESPONSE;
 import static in.res.util.TestConstants.SUCCESS_LOGIN_REQUEST;
+import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -26,6 +31,11 @@ public class TestAuth {
     @Test
     @Tag("Register")
     @DisplayName("Проверка успешной регистрации")
+    @Description(value = "Данный тест выполняет регистрацию пользователя")
+    @Owner("Katsiaryna")
+    @Tag("Authentication")
+    @Severity(CRITICAL)
+    @Story("Authentication")
     public void testRegister() {
         AuthResponse response = registerClient
                 .register(SUCCESS_AUTH_REQUEST)
@@ -49,6 +59,9 @@ public class TestAuth {
     })
     @Tag("Register")
     @DisplayName("Проверка НЕуспешной регистрации. Отсутствие тела запроса")
+    @Owner("Katsiaryna")
+    @Severity(CRITICAL)
+    @Story("Wrong Authentication")
     public void testUnsuccessfulRegister(String email, String password, String errorMessage) {
         Response response = registerClient
                 .register(new AuthRequest(email, password))
