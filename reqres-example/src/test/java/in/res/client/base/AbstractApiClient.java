@@ -1,16 +1,12 @@
 package in.res.client.base;
 
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 
 import static in.res.config.Specification.requestSpecification;
+import static in.res.util.ApiEndpoints.PATH_PARAM_ID;
 import static io.restassured.RestAssured.given;
 
 public abstract class AbstractApiClient {
-    protected void validate(ValidatableResponse response) {
-
-    }
-
     protected Response post(String path, Object body) {
         return given()
                 .spec(requestSpecification)
@@ -27,7 +23,8 @@ public abstract class AbstractApiClient {
     protected Response getById(String path, Long id) {
         return given()
                 .spec(requestSpecification)
-                .get(path, id);
+                .pathParam(PATH_PARAM_ID, id)
+                .get(path);
     }
 
     protected Response delete(String path) {
@@ -39,7 +36,7 @@ public abstract class AbstractApiClient {
         return given()
                 .spec(requestSpecification)
                 .body(body)
-                .when()
-                .put(path, id);
+                .pathParam(PATH_PARAM_ID, id)
+                .put(path);
     }
 }
