@@ -27,6 +27,8 @@
         <allure-maven.version>2.15.2</allure-maven.version>
         <hamcrest.version>3.0</hamcrest.version>
         <javafaker.version>1.0.2</javafaker.version>
+        <junit-jupiter-params.version>5.13.0-M2</junit-jupiter-params.version>
+        <json-schema-validator.version>5.5.1</json-schema-validator.version>
     </properties>
     <dependencies>
         <dependency>
@@ -79,6 +81,17 @@
             <groupId>com.github.javafaker</groupId>
             <artifactId>javafaker</artifactId>
             <version>${javafaker.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit-jupiter-params.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-schema-validator</artifactId>
+            <version>${json-schema-validator.version}</version>
         </dependency>
 
     </dependencies>

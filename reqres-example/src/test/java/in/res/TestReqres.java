@@ -69,7 +69,7 @@ public class TestReqres {
                 .when()
                 .post("/api/register")
                 .then()
-                .spec(responseSpecificationWithContent(200))
+                .spec(responseSpecificationWithContent(200,"schemas/RegisterSuccess.json"))
                 .extract()
                 .as(AuthResponse.class);
         assertAll(
@@ -91,7 +91,7 @@ public class TestReqres {
                 .body(ERROR_AUTH_REQUEST)
                 .spec(requestSpecification)
                 .when()
-                .post("/api/register")
+                .post("/register")
                 .then()
                 .spec(responseSpecification(400))
                 .extract()
@@ -108,9 +108,9 @@ public class TestReqres {
         List<ResourceResponse> resources = given()
                 .spec(requestSpecification)
                 .when()
-                .get("api/unknown")
+                .get("/unknown")
                 .then()
-                .spec(responseSpecificationWithContent(200))
+                .spec(responseSpecificationWithContent(200,"schemas/RegisterSuccess.json"))
                 .extract()
                 .body()
                 .jsonPath()
@@ -132,7 +132,7 @@ public class TestReqres {
         given()
                 .spec(requestSpecification)
                 .when()
-                .delete("/api/users/2")
+                .delete("/users/2")
                 .then()
                 .spec(responseSpecification(204));
     }
