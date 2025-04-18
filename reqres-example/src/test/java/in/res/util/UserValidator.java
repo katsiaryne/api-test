@@ -11,17 +11,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 public abstract class UserValidator {
     public static void validateModifyingProfile(UserProfileResponse response, UserProfileRequest user){
         SoftAssertions.assertSoftly(softAssertions -> {
-            assertThat(response.job()).isEqualTo(user.job());
-            assertThat(response.name()).isEqualTo(user.name());
-            assertThat(formatRequestToDateTime(response.updatedAt())).isEqualTo(getCurrentDateTime());
+            softAssertions.assertThat(response.job()).isEqualTo(user.job());
+            softAssertions.assertThat(response.name()).isEqualTo(user.name());
+            softAssertions.assertThat(formatRequestToDateTime(response.updatedAt())).isEqualTo(getCurrentDateTime());
         });
     }
 
     public static void validateCreatingProfile(UserProfileResponse response, UserProfileRequest user){
         SoftAssertions.assertSoftly(softAssertions -> {
-            assertThat(response.job()).isEqualTo(user.job());
-            assertThat(response.name()).isEqualTo(user.name());
-            assertThat(formatRequestToDateTime(response.createdAt())).isEqualTo(getCurrentDateTime());
+            softAssertions.assertThat(response.job()).isEqualTo(user.job());
+            softAssertions.assertThat(response.name()).isEqualTo(user.name());
+            softAssertions.assertThat(formatRequestToDateTime(response.createdAt())).isEqualTo(getCurrentDateTime());
         });
     }
 }

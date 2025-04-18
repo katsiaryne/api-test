@@ -27,6 +27,7 @@
         <testng.version>7.11.0</testng.version>
         <assertj-core.version>4.0.0-M1</assertj-core.version>
         <allure-testng.version>2.29.1</allure-testng.version>
+        <awaitility.version>4.3.0</awaitility.version>
     </properties>
     <dependencies>
         <dependency>
@@ -83,6 +84,12 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
             <version>${allure-testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
             <scope>test</scope>
         </dependency>
 
