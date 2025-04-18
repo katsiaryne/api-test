@@ -11,6 +11,7 @@ import org.testng.annotations.Test;
 
 import static in.res.config.Specification.responseSpecification;
 import static in.res.config.Specification.responseSpecificationWithContent;
+import static in.res.util.UserValidator.validateCreatingProfile;
 import static in.res.util.UserValidator.validateModifyingProfile;
 import static io.qameta.allure.SeverityLevel.NORMAL;
 
@@ -32,7 +33,7 @@ public class TestUserProfile {
                 .extract()
                 .as(UserProfileResponse.class);
 
-        validateModifyingProfile(response, user);
+        validateCreatingProfile(response, user);
     }
 
     @Test(retryAnalyzer = RetryFailedTest.class)

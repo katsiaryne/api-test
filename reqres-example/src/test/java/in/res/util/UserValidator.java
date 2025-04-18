@@ -16,4 +16,12 @@ public abstract class UserValidator {
             assertThat(formatRequestToDateTime(response.updatedAt())).isEqualTo(getCurrentDateTime());
         });
     }
+
+    public static void validateCreatingProfile(UserProfileResponse response, UserProfileRequest user){
+        SoftAssertions.assertSoftly(softAssertions -> {
+            assertThat(response.job()).isEqualTo(user.job());
+            assertThat(response.name()).isEqualTo(user.name());
+            assertThat(formatRequestToDateTime(response.createdAt())).isEqualTo(getCurrentDateTime());
+        });
+    }
 }

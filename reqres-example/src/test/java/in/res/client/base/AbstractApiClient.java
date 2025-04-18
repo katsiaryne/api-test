@@ -29,6 +29,7 @@ public abstract class AbstractApiClient {
 
     protected Response delete(String path) {
         return given()
+                .spec(requestSpecification)
                 .delete(path);
     }
 
