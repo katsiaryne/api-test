@@ -3,31 +3,23 @@ package in.res;
 import in.res.client.UserClient;
 import in.res.dto.request.UserProfileRequest;
 import in.res.dto.response.UserProfileResponse;
+import in.res.retry.RetryFailedTest;
 import in.res.util.UserProfileGenerator;
 import io.qameta.allure.Owner;
 import io.qameta.allure.Severity;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
-
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
+import org.testng.annotations.Test;
 
 import static in.res.config.Specification.responseSpecification;
 import static in.res.config.Specification.responseSpecificationWithContent;
+import static in.res.util.UserValidator.validateModifyingProfile;
 import static io.qameta.allure.SeverityLevel.NORMAL;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestUserProfile {
     private final UserClient userClient = new UserClient();
     private final UserProfileGenerator generator = new UserProfileGenerator();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
-    @Test
+    @Test(retryAnalyzer = RetryFailedTest.class)
     @Owner("Katsiaryna")
-    @Tag("User profile")
     public void testAddNewUser() {
         UserProfileRequest user = generator.generateRandomUserProfile();
 
@@ -40,18 +32,11 @@ public class TestUserProfile {
                 .extract()
                 .as(UserProfileResponse.class);
 
-        LocalDateTime dateTime = LocalDateTime.now(ZoneOffset.UTC);
-        assertAll(
-                "Проверка добавления нового профиля",
-                () -> assertEquals(user.job(), response.job()),
-                () -> assertEquals(user.name(), response.name()),
-                () -> assertEquals(dateTime.format(formatter), response.createdAt().substring(0, 16))
-        );
+        validateModifyingProfile(response, user);
     }
 
-    @Test
+    @Test(retryAnalyzer = RetryFailedTest.class)
     @Owner("Katsiaryna")
-    @Tag("User profile")
     public void testUpdateUser() {
         UserProfileRequest user = generator.generateRandomUserProfile();
 
@@ -63,21 +48,12 @@ public class TestUserProfile {
                 .body()
                 .extract()
                 .as(UserProfileResponse.class);
-
-        LocalDateTime dateTime = LocalDateTime.now(ZoneOffset.UTC);
-        assertAll(
-                "Проверка обновления существующего профиля",
-                () -> assertEquals(user.job(), response.job()),
-                () -> assertEquals(user.name(), response.name()),
-                () -> assertEquals(dateTime.format(formatter), response.updatedAt().substring(0, 16))
-        );
+        validateModifyingProfile(response, user);
     }
 
-    @Test
-    @DisplayName("Проверка кода ответа при удалении пользователя")
+    @Test(description = "Проверка удаления профиля")
     @Owner("Katsiaryna")
     @Severity(NORMAL)
-    @Tag("User profile")
     public void testDeleteUserProfile() {
         userClient
                 .deleteUser()

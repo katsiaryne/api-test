@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="All Test Suite">
+    <test verbose="2" preserve-order="true" name="D:/aqa/api-test/reqres-example">
+        <classes>
+            <class name="in.res.TestAuth">
+                <methods>
+                    <include name="testRegister"/>
+                    <include name="testLogin"/>
+                </methods>
+            </class>
+            <class name="in.res.TestReqres">
+                <methods>
+                    <include name="checkUsers"/>
+                </methods>
+            </class>
+            <class name="in.res.TestResource">
+                <methods>
+                    <include name="checkListResource"/>
+                    <include name="testGetSingleResource"/>
+                    <include name="testGetSingleResourceError"/>
+                </methods>
+            </class>
+            <class name="in.res.TestUserProfile">
+                <methods>
+                    <include name="testAddNewUser"/>
+                    <include name="testUpdateUser"/>
+                    <include name="testDeleteUserProfile"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
